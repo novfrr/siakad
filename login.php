@@ -17,11 +17,35 @@ $qry = "SELECT * FROM users WHERE email='$email' AND password='$password'";
 //4. jalankan query
 $result = mysqli_query($con,$qry);
 
-if($result){
-  //login berhasil
-  $pesan = '<div class="alert alert alert-success" role="alert"> A simple danger alert-check it out! </div>'
+//5. menghitung jumlah hasil query
+$hitung = mysqli_num_rows($result);
+
+if($hitung){
+  //proses login
+
+  //1. mengambil seluruh data login
+  $data = mysqli_fetch_array($result);
+  $id = $data['id'];
+  $nama = $data['nama'];
+
+  //pembuatan session
+  $_SESSION['sid'] = $id;
+  $_SESSION['nama'] = $nama;
+  $_SESSION['email'] = $email;
+
+  // update last log
+  $qry_update = "UPDATE users SET last_log='now()' WHERE id='$id'";
+  $res_update = mysqli_query($con, $qry_update);
+
+  //pengambilan ke dalam halaman index
+  ?>
+  <script>
+    document.location="index.php";
+  </script>
+  <?php
 }else{
-  $pesan = '<div class="alert alert alert-success" role="alert"> A simple danger alert-check it out! </div>'
+  //login gagal
+    $pesan ='<div class="alert alert-danger" role="alert">Login Tidak Valid.</div>';
 }
 }
 ?>
