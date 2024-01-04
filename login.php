@@ -37,8 +37,8 @@ if($hitung){
   }else{
      //pembuatan session
   $_SESSION['sid'] = $id;
-  $_SESSION['nama'] = $nama;
-  $_SESSION['email'] = $email;
+  $_SESSION['snama'] = $nama;
+  $_SESSION['semail'] = $email;
 
   }
 
